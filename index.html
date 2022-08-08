@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DataClevers Register</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://getbootstrap.com/docs/5.2/assets/css/docs.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+
+  <body class="container">
+    <nav class="navbar bg-light">
+      <div class="container-fluid">
+        <h3>Dataclevers registration form</h3>
+      </div>
+    </nav>
+
+    <br />
+
+    <!-- Example Code -->
+
+    <form class="row g-3" method="post" action="/">
+      <div class="col-md-4 form-floating">
+        <input
+          type="text"
+          class="form-control"
+          name="surname"
+          placeholder="Prénom"
+        />
+        <label>Prénom</label>
+      </div>
+
+      <div class="col-md-4 form-floating">
+        <input type="text" class="form-control" name="name" placeholder="Nom" />
+        <label>Nom</label>
+      </div>
+
+      <div class="col-md-4 form-floating">
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          placeholder="Nom d'utilisateur"
+        />
+        <label>Nom d'utilisateur</label>
+      </div>
+
+      <div class="col-md-4 form-floating">
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          placeholder="Nom d'utilisateur"
+        />
+        <label>Email</label>
+      </div>
+
+      <div class="col-md-6 form-floating">
+        <input
+          type="date"
+          class="form-control"
+          name="birthday"
+          placeholder="Age"
+        />
+        <label>Date de naissance</label>
+      </div>
+
+      <div class="col-12 form-floating">
+        <textarea
+          class="form-control"
+          name="biography"
+          placeholder="Biographie"
+          rows="6"
+        ></textarea>
+        <label>Biographie</label>
+      </div>
+
+      <div class="col-md-6 form-floating">
+        <select class="form-select" name="langue">
+          <option selected>Choisir...</option>
+          <option value="français">Français</option>
+          <option value="anglais">Anglais</option>
+        </select>
+        <label>Langue de predilection</label>
+      </div>
+
+      <label for="">Vos centres d'interet</label>
+
+      <div id="interest-list">
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="inlineCheckbox1"
+            value="musique"
+            name="interest"
+          />
+          <label class="form-check-label" name="interest" for="inlineCheckbox1"
+            >Musique</label
+          >
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="interest"
+            id="inlineCheckbox2"
+            value="sport"
+          />
+          <label class="form-check-label" name="interest" for="inlineCheckbox2"
+            >Sport</label
+          >
+          
+        </div>
+        <div id="interest-add-list"></div>
+      </div>
+
+      <div class="input-group col-6">
+        <input
+          id="interest-field"
+          type="text"
+          class="form-control col-md-6"
+          placeholder="autre centre d'interet"
+          aria-label="Recipient's username"
+          aria-describedby="basic-addon2"
+        />
+        <div class="input-group-append">
+          <button
+            onclick="return addInterest()"
+            class="btn btn-outline-info"
+            type="button"
+          >
+            Ajouter
+          </button>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Sign in</button>
+      </div>
+    </form>
+
+    <!-- End Example Code -->
+    <script defer>
+      function addInterest() {
+        let interests = document.querySelector("#interest-add-list");
+        let interest = document.querySelector("#interest-field");
+        let html =
+          '<div class="form-check form-check-inline"><input class="form-check-input" name="interest" checked type="checkbox"id="inlineCheckbox2" value="' +
+          interest.value +
+          '"/><label class="form-check-label" for="inlineCheckbox2">' +
+          interest.value +
+          "</label></div>";
+
+        if (interest.value.trim() != "") {
+          // if (interests.innerHTML == null) interests.innerHTML = html;
+           interests.innerHTML += html;
+        }
+
+        interest.value = "";
+      }
+    </script>
+  </body>
+</html>
