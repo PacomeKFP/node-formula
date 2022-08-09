@@ -1,0 +1,43 @@
+{
+    "users" : {
+        "Prenom" : "",
+        "Nom" : "",
+        "Email": "" ,
+        "MotdePass": "" ,
+        "nomUtilisateur" : "",
+        "Biographie" : "",
+        "CentreInteret" : [],
+        "Langue" : {
+            "designation" : "",
+            "Niveau" : ""
+        },
+
+        "Education" : {
+            "Diplome" : "",
+            "Domaine" : "",
+            "Ecole" : "",
+            "DateDebut": "",
+            "DateFin" : ""
+        },
+        "Experience" : {
+            "Titre" : "",
+            "Employeur" : "",
+            "UrlEmployeur" : "",
+            "ContactEmployeur" : "",
+            "Domaine" : "",
+            "DateDebut": "",
+            "DateFin" : ""
+        },
+        "Certificat" : {
+            "NomCertificat" : "",
+            "domain":"",
+            "Emetteur" : "",
+            "Date" : ""
+        },
+        "Competences" : {
+            "Titre" : "",
+            "Domaine" : ""
+        }
+    }
+
+}

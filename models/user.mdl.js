@@ -1,3 +1,4 @@
+const { json } = require("express");
 const mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
@@ -5,14 +6,14 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
   surname: { type: String, required :true },
   name: { type: String },
-  birthday: { type: Date, required :true },
+  birthday: { type: Date},
   email: { type: String, required :true },  
   // password: { type: String },
-  
   username: { type: String },
   biography: { type: String },
   interest: [{ type: String }],
   language: { type: String },
+  education : [{type: Object}],
 
   date: {
     type: Date,
