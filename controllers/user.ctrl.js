@@ -2,7 +2,6 @@ const userRouter = require("express").Router();
 const fs = require("fs");
 const ObjectId = require("mongoose").Types.ObjectId;
 const { User } = require("../models/user.mdl");
-const { Education } = require("../models/education.mdl");
 
 let fields = Array("educations", "experiences", "certificates", "competences");
 let lookups = fields.map((field) => {
