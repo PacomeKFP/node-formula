@@ -1,6 +1,6 @@
 const userRouter = require("express").Router();
 const ObjectId = require("mongoose").Types.ObjectId;
-const {db} = require('../models/dbConfig')
+const { db } = require("../models/dbConfig");
 const { User } = require("../models/user.mdl");
 const { Education } = require("../models/education.mdl");
 
@@ -40,8 +40,8 @@ userRouter.get("/update/:user_id/:field/:field_id", (req, res) => {
     return res
       .status(400)
       .send(`Not valid Id user-> ${user_id} OR ${field}-> ${field_id}`);
-  
-      User.findById(user_id, (err, docs) => {
+
+  User.findById(user_id, (err, docs) => {
     try {
       let user = docs;
       user.education.push(ObjectId(field_id));
@@ -51,65 +51,40 @@ userRouter.get("/update/:user_id/:field/:field_id", (req, res) => {
         { upsert: true },
         (err, docs) => {
           var response = docs;
-          console.log(response);
-          response.educations = new Array();
-          let a = new Array(); 
-          for (let i = 0; i < docs.education.length; i++) {
-            if (ObjectId.isValid(docs.education[i])) {
-              console.log("valid");
-              
-              Education.findById(docs.education[i], (err, doc) => {
-                response.educations.push(doc);
-                a.push(doc);
-                // console.log(response.educations);
-                console.log(a);
-              });
-            }
-          }
-          console.log(a);
-          console.log(response.educations);
-          if (!err) res.send(response);
-          else console.log(err);
+          if (!err) return res.redirect(`/user/${user_id}`) 
+           else console.log(err);
         }
       );
-      // console.log(user);
-      // User.aggregate(
-      //   [
-      //     {
-      //       $lookup: {
-      //         from: "educations",
-      //         localField: "education",
-      //         foreignField: "_id",
-      //         as: "educations",
-      //       },
-      //     },
-      //   ],
-      //   (err, docs) => {
-      //     console.log("docs");
-      //     if (!err) res.send(docs);
-      //     else console.log(err);
-      //   }
-      // );
     } catch (err) {
       return res.send(err);
     }
   });
 });
 
-
-userRouter.get("/agregation", (req, res) => {
-   User.aggregate([
-    {
-      $lookup: {
-        from: "educations",
-        localField: "education",
-        foreignField: "_id",
-        as: "educations",
+userRouter.get("/:id", (req, res) => {
+  //get an user
+  User.aggregate(
+    [
+      {
+        $match: {
+          _id: ObjectId(req.params.id),
+        },
       },
-    },
-  ], (err, docs)=>{
-    res.send(docs)
-    console.log(err)
-  })
-}); 
+      {
+
+        $lookup: {
+          from: "education"+"s",
+          localField: "education",
+          foreignField: "_id",
+          as:"education"
+        },
+      },
+      
+    ],
+    (err, doc) => {
+      res.send(doc);
+    }
+  );
+});
+
 module.exports = { userRouter };
