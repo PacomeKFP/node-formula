@@ -16,7 +16,9 @@ app.use("/educations", educationRouter);
 app.use("/experiences", experienceRouter);
 app.use("/certificates", certificateRouter);
 app.use("/competences", competenceRouter);
-
+app.get("/download", (req, res)=>{
+  res.sendFile('views/download.html', {root : '.'});
+})
 
 app.get("/*", (req, res) => {
   res.redirect("/user");
