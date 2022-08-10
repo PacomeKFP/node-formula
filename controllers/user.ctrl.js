@@ -3,6 +3,8 @@ const ObjectId = require("mongoose").Types.ObjectId;
 const { User } = require("../models/user.mdl");
 const { Education } = require("../models/education.mdl");
 
+let fields = Array("educations", "experiences", "certificates", "competences");
+
 // go to the user registration formular
 userRouter.get("/", (req, res) => {
   res.sendFile("views/index.html", { root: "." });
@@ -21,17 +23,11 @@ userRouter.post("/", (req, res) => {
   try {
     let user = new User(req.body);
     user.save();
-    res.setHeader("Type-Content", "application/json");
-    // res.status(200).json({
-    //   status: "Success",
-    //   data: user,
-    // });
-    res.redirect(`/education/${user._id}`);
+    res.redirect(`/${fields[0]}/${user._id}`);
   } catch (err) {
     res.send(err);
   }
 });
-
 
 userRouter.get("/push/:user_id/:field/:field_id", (req, res) => {
   // let field = req.params.field;
@@ -43,31 +39,34 @@ userRouter.get("/push/:user_id/:field/:field_id", (req, res) => {
 
   User.updateOne(
     { _id: ObjectId(user_id) },
-    { $push: { education: ObjectId(field_id) } },
+    { $push: { [field]: ObjectId(field_id) } },
     { upsert: true },
     (err, doc) => {
-      return res.send(doc);
+      if (err) return res.send(err.status).send("An error occured : \n"+err);
+      let index = fields.indexOf(field);
+      console.log(index);
+      index++;
+      if (index == fields.length) index = 0;
+
+      return res.redirect(`/${fields[index]}/${user_id}`);
     }
   );
 });
 
 //get an user
 userRouter.get("/:id", (req, res) => {
-  const matchUser = { $match: { _id: ObjectId(req.params.id) } };
-
-  let fields = ['education', 'experience', 'certificates', 'competences']
-  //il faudra itterer sur ce lookup pour fablriquer tous les autres
-  var lookups = [
-    {
+  let matchUser = { $match: { _id: ObjectId(req.params.id) } };
+  let lookups = fields.map((field) => {
+    return {
       $lookup: {
-        from: "education" + "s",
-        localField: "education",
+        from: field,
+        localField: field,
         foreignField: "_id",
-        as: "education",
+        as: field,
       },
-    },
-    
-  ];
+    };
+  });
+
   User.aggregate([matchUser, ...lookups], (err, doc) => {
     res.send(doc);
   });

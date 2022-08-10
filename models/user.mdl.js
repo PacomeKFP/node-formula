@@ -13,7 +13,8 @@ var UserSchema = new Schema({
   biography: { type: String },
   interest: [{ type: String }],
   language: { type: String },
-  education : [{type: Object}],
+  educations : [{type: mongoose.Types.ObjectId}],
+  experiences : [{type: mongoose.Types.ObjectId}],
 
   date: {
     type: Date,

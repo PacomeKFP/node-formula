@@ -19,7 +19,7 @@ educationRouter.post("/:user_id", (req, res) => {
   let education = new Education(req.body);
   education.save();
   return res.redirect(
-    `/user/push/${req.params.user_id}/education/${education._id}`
+    `/user/push/${req.params.user_id}/educations/${education._id}`
   );
 });
 
