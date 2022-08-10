@@ -1,6 +1,5 @@
 const userRouter = require("express").Router();
 const ObjectId = require("mongoose").Types.ObjectId;
-const { db } = require("../models/dbConfig");
 const { User } = require("../models/user.mdl");
 const { Education } = require("../models/education.mdl");
 
@@ -33,7 +32,7 @@ userRouter.post("/", (req, res) => {
   }
 });
 
-userRouter.get("/update/:user_id/:field/:field_id", (req, res) => {
+userRouter.get("/push/:user_id/:field/:field_id", (req, res) => {
   // let field = req.params.field;
   let { user_id, field, field_id } = req.params;
   if (!ObjectId.isValid(user_id) || !ObjectId.isValid(field_id))
@@ -41,50 +40,36 @@ userRouter.get("/update/:user_id/:field/:field_id", (req, res) => {
       .status(400)
       .send(`Not valid Id user-> ${user_id} OR ${field}-> ${field_id}`);
 
-  User.findById(user_id, (err, docs) => {
-    try {
-      let user = docs;
-      user.education.push(ObjectId(field_id));
-      User.findByIdAndUpdate(
-        user_id,
-        { $set: user },
-        { upsert: true },
-        (err, docs) => {
-          var response = docs;
-          if (!err) return res.redirect(`/user/${user_id}`) 
-           else console.log(err);
-        }
-      );
-    } catch (err) {
-      return res.send(err);
-    }
-  });
-});
-
-userRouter.get("/:id", (req, res) => {
-  //get an user
-  User.aggregate(
-    [
-      {
-        $match: {
-          _id: ObjectId(req.params.id),
-        },
-      },
-      {
-
-        $lookup: {
-          from: "education"+"s",
-          localField: "education",
-          foreignField: "_id",
-          as:"education"
-        },
-      },
-      
-    ],
+  User.updateOne(
+    { _id: ObjectId(user_id) },
+    { $push: { education: ObjectId(field_id) } },
+    { upsert: true },
     (err, doc) => {
-      res.send(doc);
+      return res.send(doc);
     }
   );
+});
+
+//get an user
+userRouter.get("/:id", (req, res) => {
+  const matchUser = { $match: { _id: ObjectId(req.params.id) } };
+
+  let fields = ['education', 'experience', 'certificates', 'competences']
+  //il faudra itterer sur ce lookup pour fablriquer tous les autres
+  var lookups = [
+    {
+      $lookup: {
+        from: "education" + "s",
+        localField: "education",
+        foreignField: "_id",
+        as: "education",
+      },
+    },
+    
+  ];
+  User.aggregate([matchUser, ...lookups], (err, doc) => {
+    res.send(doc);
+  });
 });
 
 module.exports = { userRouter };

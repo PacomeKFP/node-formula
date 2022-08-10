@@ -6,20 +6,22 @@ const { Education } = require("../models/education.mdl");
 const { User } = require("../models/user.mdl");
 const { userRouter } = require("./user.ctrl");
 
-// go to the education registration formular
-educationRouter.get("/:id", (req, res) => {
-  res.sendFile("views/education.html", { root: "." });
-});
-
-//See all users
-educationRouter.get("/get", (req, res) => {
+//get All educations
+educationRouter.get("/", (req, res) => {
   Education.find((err, docs) => {
     if (!err) res.send(docs);
     else res.send("Error occured" + err);
   });
 });
 
-//create new user
+
+// go to the education registration formular for the user_id specified
+educationRouter.get("/:user_id", (req, res) => {
+  return res.sendFile("views/education.html", { root: "." });
+});
+
+
+//add a new education to an user with the specified id
 educationRouter.post("/:user_id", (req, res) => {
   User.findById(req.params.user_id, (err, docs) => {
     if (!err) {
@@ -30,14 +32,11 @@ educationRouter.post("/:user_id", (req, res) => {
           data: "Unable to reach user with id " + req.params.user_id,
         });
       } else {
-        // create the new educaion instance and save it
         let education = new Education(req.body);
         education.save();
-        //call the method od the UserCtrl router whith the education doc_id
-
-        let id = education._id;
-        return res.redirect(`/user/update/${req.params.user_id}/education/${education._id}`)
-
+        return res.redirect(
+          `/user/push/${req.params.user_id}/education/${education._id}`
+        );
       }
     } else {
       res.statusCode = 500;
