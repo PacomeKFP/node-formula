@@ -32,6 +32,7 @@ userRouter.post("/", (req, res) => {
   }
 });
 
+
 userRouter.get("/push/:user_id/:field/:field_id", (req, res) => {
   // let field = req.params.field;
   let { user_id, field, field_id } = req.params;
