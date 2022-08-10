@@ -1,9 +1,20 @@
 const userRouter = require("express").Router();
+const fs = require("fs");
 const ObjectId = require("mongoose").Types.ObjectId;
 const { User } = require("../models/user.mdl");
 const { Education } = require("../models/education.mdl");
 
 let fields = Array("educations", "experiences", "certificates", "competences");
+let lookups = fields.map((field) => {
+  return {
+    $lookup: {
+      from: field,
+      localField: field,
+      foreignField: "_id",
+      as: field,
+    },
+  };
+});
 
 // go to the user registration formular
 userRouter.get("/", (req, res) => {
@@ -42,12 +53,21 @@ userRouter.get("/push/:user_id/:field/:field_id", (req, res) => {
     { $push: { [field]: ObjectId(field_id) } },
     { upsert: true },
     (err, doc) => {
-      if (err) return res.send(err.status).send("An error occured : \n"+err);
+      if (err) return res.send(err.status).send("An error occured : \n" + err);
       let index = fields.indexOf(field);
       console.log(index);
       index++;
-      if (index == fields.length) index = 0;
+      if (index == fields.length) {
+        let matchUser = { $match: { _id: ObjectId(user_id) } };
 
+        User.aggregate([matchUser, ...lookups], (err, doc) => {
+          fs.writeFile(`data/user.json`, JSON.stringify(doc), (err) => {
+            if (err) console.log(err);
+          });
+        });
+
+        index = 0;
+      }
       return res.redirect(`/${fields[index]}/${user_id}`);
     }
   );
@@ -56,16 +76,6 @@ userRouter.get("/push/:user_id/:field/:field_id", (req, res) => {
 //get an user
 userRouter.get("/:id", (req, res) => {
   let matchUser = { $match: { _id: ObjectId(req.params.id) } };
-  let lookups = fields.map((field) => {
-    return {
-      $lookup: {
-        from: field,
-        localField: field,
-        foreignField: "_id",
-        as: field,
-      },
-    };
-  });
 
   User.aggregate([matchUser, ...lookups], (err, doc) => {
     res.send(doc);

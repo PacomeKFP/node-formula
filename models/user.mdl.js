@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
   surname: { type: String, required :true },
   name: { type: String },
+  username: { type: String },
   birthday: { type: Date},
   email: { type: String, required :true },  
   // password: { type: String },
