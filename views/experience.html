@@ -20,7 +20,7 @@
   <body class="container">
     <nav class="navbar bg-light">
       <div class="container-fluid">
-        <h3>Add Work experience to your profile</h3>
+        <h3>Ajouter une experience professionelle à votre profil</h3>
       </div>
     </nav>
 
@@ -107,8 +107,7 @@
     <!-- End Example Code -->
     <script defer>
       var form = document.querySelector("form");
-      let user_id = window.location.pathname.split("/")[2];
-      form.action = "/experiences/" + user_id;
+      form.action = window.location.pathname;
 
     </script>
   </body>

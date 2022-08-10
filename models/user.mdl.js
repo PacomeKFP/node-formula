@@ -15,6 +15,9 @@ var UserSchema = new Schema({
   language: { type: String },
   educations : [{type: mongoose.Types.ObjectId}],
   experiences : [{type: mongoose.Types.ObjectId}],
+  certificates : [{type: mongoose.Types.ObjectId}],
+  competences : [{type: mongoose.Types.ObjectId}],
+
 
   date: {
     type: Date,
