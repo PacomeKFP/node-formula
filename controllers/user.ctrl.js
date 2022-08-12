@@ -1,4 +1,5 @@
 const userRouter = require("express").Router();
+const { lookup } = require("dns");
 const fs = require("fs");
 const ObjectId = require("mongoose").Types.ObjectId;
 const { User } = require("../models/user.mdl");
@@ -22,10 +23,11 @@ userRouter.get("/", (req, res) => {
 
 //See all users
 userRouter.get("/get", (req, res) => {
-  User.find((err, docs) => {
+  saveAll();
+  User.aggregate([...lookups], (err, docs) => {
     if (!err) res.send(docs);
     else res.send("Error occured" + err);
-  });
+  }); 
 });
 
 //create new user
@@ -39,9 +41,9 @@ userRouter.post("/", (req, res) => {
   }
 });
 
-userRouter.get("/push/:user_id/:field/:field_id", (req, res) => {
+userRouter.get("/push/:user_id/:field/:field_id/:action", (req, res) => {
   // let field = req.params.field;
-  let { user_id, field, field_id } = req.params;
+  let { user_id, field, field_id, action } = req.params;
   if (!ObjectId.isValid(user_id) || !ObjectId.isValid(field_id))
     return res
       .status(400)
@@ -55,18 +57,10 @@ userRouter.get("/push/:user_id/:field/:field_id", (req, res) => {
       if (err) return res.send(err.status).send("An error occured : \n" + err);
       let index = fields.indexOf(field);
       console.log(index);
-      index++;
-      if (index == fields.length) {
-        let matchUser = { $match: { _id: ObjectId(user_id) } };
+      if (action == "next") index++;
+      if (index == fields.length) index = 0;
 
-        User.aggregate([matchUser, ...lookups], (err, doc) => {
-          fs.writeFile(`data/user.json`, JSON.stringify(doc), (err) => {
-            if (err) console.log(err);
-          });
-        });
-
-        index = 0;
-      }
+      saveAll();
       return res.redirect(`/${fields[index]}/${user_id}`);
     }
   );
@@ -74,11 +68,17 @@ userRouter.get("/push/:user_id/:field/:field_id", (req, res) => {
 
 //get an user
 userRouter.get("/:id", (req, res) => {
-  let matchUser = { $match: { _id: ObjectId(req.params.id) } };
-
   User.aggregate([matchUser, ...lookups], (err, doc) => {
-    res.send(doc);
+    !err ? res.send(doc) : res.send(err);
   });
 });
+
+const saveAll = () => {
+  User.aggregate([...lookups], (err, doc) => {
+    fs.writeFile(`data/users.json`, JSON.stringify(doc), (err) => {
+      if (err) console.log(err);
+    });
+  });
+};
 
 module.exports = { userRouter };

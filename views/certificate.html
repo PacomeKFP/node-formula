@@ -34,6 +34,7 @@
           type="text"
           class="form-control"
           name="name"
+          required
           placeholder="Nom du certificat"
         />
         <label>Nom du certificat</label>
@@ -43,6 +44,7 @@
           type="text"
           class="form-control"
           name="domain"
+          required
           placeholder="Domaine"
         />
         <label>Domaine</label>
@@ -52,6 +54,7 @@
           type="text"
           class="form-control"
           name="emitter"
+          required
           placeholder="Emetteur"
         />
         <label>Emetteur</label>
@@ -67,9 +70,32 @@
         <label>Date d'obtention</label>
       </div>
 
-
-      <div class="col-12">
-        <button type="submit" class="btn btn-primary">Ajouter à mon profil</button>
+      <div
+        style="
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: space-evenly;
+        "
+      >
+        <button
+          value="add"
+          name="action"
+          type="submit"
+          class="btn btn-outline-primary"
+        >
+          Ajouter
+        </button>
+        <button
+          value="next"
+          name="action"
+          type="submit"
+          class="btn btn-primary"
+        >
+          Continuer
+        </button>
+        <a id="next" class="btn btn-outline-warning" href="/competences/"
+          >Sauter</a
+        >
       </div>
     </form>
 
@@ -77,7 +103,8 @@
     <script defer>
       var form = document.querySelector("form");
       form.action = window.location.pathname;
-
+      let next = document.querySelector("#next");
+      next.href += window.location.pathname.split("/")[2];
     </script>
   </body>
 </html>

@@ -19,7 +19,7 @@ certificateRouter.post("/:user_id", (req, res) => {
   let certificate = new Certificate(req.body);
   certificate.save();
   return res.redirect(
-    `/user/push/${req.params.user_id}/certificates/${certificate._id}`
+    `/user/push/${req.params.user_id}/certificates/${certificate._id}/${req.body.action}`
   );
 });
 

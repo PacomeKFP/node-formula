@@ -34,6 +34,7 @@
           type="text"
           class="form-control"
           name="title"
+          required
           placeholder="Titre"
         />
         <label>Titre</label>
@@ -44,17 +45,27 @@
           type="text"
           class="form-control"
           name="domain"
+          required
           placeholder="Domaine"
         />
         <label>Domaine</label>
       </div>
 
-      
-
-      
-
-      <div class="col-12">
-        <button type="submit" class="btn btn-primary">Ajouter à mon profil</button>
+      <div
+        style="
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: space-evenly;
+        "
+      >
+        <button
+          value="next"
+          name="action"
+          type="submit"
+          class="btn btn-primary"
+        >
+          Continuer vers education
+        </button>
       </div>
     </form>
 
@@ -62,8 +73,6 @@
     <script defer>
       var form = document.querySelector("form");
       form.action = window.location.pathname;
-
-
     </script>
   </body>
 </html>

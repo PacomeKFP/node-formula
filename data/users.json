@@ -1,0 +1,83 @@
+[
+  {
+    "_id": "62f572d7381aed3d47414b88",
+    "surname": "gcfhfg",
+    "name": "hfghfg",
+    "username": "hfghfgh",
+    "birthday": "2004-06-29T00:00:00.000Z",
+    "email": "qsdqs@gmail.com",
+    "biography": "fghfghfg",
+    "interest": [
+      "musique",
+      "sport",
+      "fghfgh",
+      "kjlkjkl",
+      "kjlkjkl",
+      "lkjlkjkl",
+      "mljlmkjklm",
+      ":jklmjlk"
+    ],
+    "educations": [
+      {
+        "_id": "62f57419381aed3d47414b8b",
+        "diploma": "Baccalaureat",
+        "domain": "Mathematiques et Sciences Physique",
+        "school": "LCMG ",
+        "startDate": null,
+        "endDate": null,
+        "date": "2022-08-11T21:18:43.304Z",
+        "__v": 0
+      },
+      {
+        "_id": "62f57436381aed3d47414b8f",
+        "diploma": "probatoire",
+        "domain": "Mathematiques et Sciences Physique",
+        "school": "LCMG ",
+        "startDate": null,
+        "endDate": null,
+        "date": "2022-08-11T21:18:43.304Z",
+        "__v": 0
+      },
+      {
+        "_id": "62f574cd381aed3d47414b93",
+        "diploma": "fgh",
+        "domain": "fdgdf",
+        "school": "gdfg",
+        "startDate": null,
+        "endDate": null,
+        "date": "2022-08-11T21:18:43.304Z",
+        "__v": 0
+      }
+    ],
+    "experiences": [
+      {
+        "_id": "62f574e3381aed3d47414b97",
+        "title": "dfg",
+        "employer": "dfgd",
+        "employerUrl": "fgdfgdf",
+        "employerContact": "gdfgfd",
+        "domain": "gdfg",
+        "startDate": "",
+        "endDate": "",
+        "date": "2022-08-11T21:18:43.312Z",
+        "__v": 0
+      },
+      {
+        "_id": "62f574f2381aed3d47414b9b",
+        "title": "trrfgyhfg",
+        "employer": "hfgh",
+        "employerUrl": "fghfghf",
+        "employerContact": "ghfgh",
+        "domain": "fg",
+        "startDate": "",
+        "endDate": "",
+        "date": "2022-08-11T21:18:43.312Z",
+        "__v": 0
+      }
+    ],
+    "certificates": [],
+    "competences": [],
+    "date": "2022-08-11T21:18:43.273Z",
+    "__v": 0
+  }
+]

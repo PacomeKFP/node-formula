@@ -19,7 +19,7 @@ experienceRouter.post("/:user_id", (req, res) => {
   let experience = new Experience(req.body);
   experience.save();
   return res.redirect(
-    `/user/push/${req.params.user_id}/experiences/${experience._id}`
+    `/user/push/${req.params.user_id}/experiences/${experience._id}/${req.body.action}`
   );
 });
 

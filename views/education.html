@@ -33,7 +33,7 @@
         <input
           type="text"
           class="form-control"
-          name="diploma"
+          name="diploma" required
           placeholder="Diplome obtenu"
         />
         <label>Diplome</label>
@@ -43,7 +43,7 @@
         <input
           type="text"
           class="form-control"
-          name="domain"
+          name="domain" required
           placeholder="Domaine"
         />
         <label>Domaine</label>
@@ -75,19 +75,23 @@
           class="form-control"
           name="endDate"
           placeholder="Date de fin"
-        />
+        /> required
         <label>Date de fin</label>
       </div>
 
-      <div class="col-12">
-        <button type="submit" class="btn btn-primary">Ajouter à mon profil</button>
-      </div>
+      <div style="display:flex ; flex-flow:row wrap ; justify-content: space-evenly ;">
+        <button value="add" name="action" type="submit" class="btn btn-outline-primary">Ajouter</button>
+        <button value="next" name="action" type="submit" class="btn btn-primary">Continuer</button>
+      
+        <a id="next" class="btn btn-outline-warning" href="/experiences/">Sauter</a></div>
     </form>
 
     <!-- End Example Code -->
     <script defer>
       var form = document.querySelector("form");
       form.action = window.location.pathname;
+      let next = document.querySelector("#next");
+      next.href += window.location.pathname.split('/')[2]; 
 
 
     </script>

@@ -19,7 +19,7 @@ competenceRouter.post("/:user_id", (req, res) => {
   let competence = new Competence(req.body);
   competence.save();
   return res.redirect(
-    `/user/push/${req.params.user_id}/competences/${competence._id}`
+    `/user/push/${req.params.user_id}/competences/${competence._id}/${req.body.action}`
   );
 });
 

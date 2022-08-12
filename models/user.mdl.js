@@ -29,30 +29,3 @@ var UserSchema = new Schema({
 var User = mongoose.model("users", UserSchema);
 
 module.exports = { User };
-
-/**
- * 
- * 
- education: [
-    {
-      diploma: { type: String },
-      domain: { type: String },
-      school: { type: String },
-      startDate: { type: String, default: Date.now() },
-      endDate: { type: String, default: Date.now() },
-    },
-  ],
-
-  experience: [
-    {
-      title: { type: String },
-      employer: { type: String },
-      employerUrl: { type: String },
-      employerContact: { type: String },
-      domain: { type: String },
-      startDate: { type: String, default: Date.now() },
-      endDate: { type: String },
-    },
-  ],
-
-  */
